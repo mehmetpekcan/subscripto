@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/mainScreen">
+
+  <fragment
+      android:id="@+id/mainScreen"
+      android:name="com.mehmetpekcan.subscripto.MainScreen"
+      android:label="fragment_main_screen"
+      tools:layout="@layout/fragment_main_screen" />
+  <fragment
+      android:id="@+id/settingsScreen"
+      android:name="com.mehmetpekcan.subscripto.SettingsScreen"
+      android:label="fragment_settings_screen"
+      tools:layout="@layout/fragment_settings_screen" />
+  <fragment
+      android:id="@+id/statisticsScreen"
+      android:name="com.mehmetpekcan.subscripto.StatisticsScreen"
+      android:label="fragment_statistics_screen"
+      tools:layout="@layout/fragment_statistics_screen" />
+  <fragment
+      android:id="@+id/newSubscriptionScreen"
+      android:name="com.mehmetpekcan.subscripto.NewSubscriptionScreen"
+      android:label="fragment_new_subscription_screen"
+      tools:layout="@layout/fragment_new_subscription_screen" />
+</navigation>
