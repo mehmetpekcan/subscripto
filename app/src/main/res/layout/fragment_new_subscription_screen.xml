@@ -6,13 +6,125 @@
     android:layout_height="match_parent"
     tools:context=".NewSubscriptionScreen">
 
-  <TextView
-      android:layout_width="wrap_content"
+  <LinearLayout
+      android:orientation="vertical"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:textAlignment="center"
+        android:text="New Subscription"
+        android:textColor="@color/PRIMARY_COLOR"
+        android:textSize="24dp"
+        android:textStyle="bold" />
+
+    <TextView
+      android:layout_marginTop="24dp"
+      android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:text="New Screen"
-      app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toTopOf="parent" />
+      android:layout_marginStart="16dp"
+      android:textColor="@color/BLACK"
+      android:text="Subscription Name*"/>
+
+    <EditText
+        android:id="@+id/inputSubscriptionName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/custom_input"
+        android:ems="10"
+        android:inputType="text"
+        android:hint="Netflix.."
+        android:textColorHint="@color/LIGHT_WHITE"
+        android:textColor="@color/BLACK" />
+
+    <TextView
+        android:layout_marginTop="24dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:textColor="@color/BLACK"
+        android:text="Cost*"/>
+
+    <EditText
+        android:id="@+id/inputCost"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/custom_input"
+        android:ems="10"
+        android:inputType="text"
+        android:hint="24₺.."
+        android:textColorHint="@color/LIGHT_WHITE"
+        android:textColor="@color/BLACK" />
+
+    <TextView
+        android:layout_marginTop="24dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:textColor="@color/BLACK"
+        android:text="Date*"/>
+
+    <EditText
+        android:id="@+id/inputDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/custom_input"
+        android:ems="10"
+        android:inputType="text"
+        android:hint="22 June of every month.."
+        android:textColorHint="@color/LIGHT_WHITE"
+        android:textColor="@color/BLACK" />
+
+    <TextView
+        android:layout_marginTop="24dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:textColor="@color/BLACK"
+        android:text="Description"/>
+
+    <EditText
+        android:id="@+id/inputDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/custom_input"
+        android:ems="10"
+        android:inputType="textMultiLine"
+        android:hint="22 June of every month.."
+        android:textColorHint="@color/LIGHT_WHITE"
+        android:lines="4"
+        android:minLines="4"
+        android:gravity="top|left"
+        android:maxLines="6"
+        android:textColor="@color/BLACK" />
+
+    <Button
+        android:id="@+id/buttonNewSubscription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/primary_button"
+        style="@style/primaryButtonStyle"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="24dp"
+        android:text="Create" />
+  </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout >
