@@ -7,6 +7,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -29,11 +31,19 @@ public class SubscriptionAdapter extends RecyclerView.Adapter<SubscriptionAdapte
  }
 
  @Override
- public void onBindViewHolder(@NonNull SubscriptionHolder holder, int position) {
+ public void onBindViewHolder(@NonNull SubscriptionHolder holder, final int position) {
   holder.brandTitle.setText(subscriptions.get(position).getBrand());
   holder.subscriptionDate.setText(subscriptions.get(position).getDate());
   holder.subscriptionPrice.setText(subscriptions.get(position).getPrice());
   holder.brandLogo.setImageResource(subscriptions.get(position).getLogo());
+
+  holder.itemView.setOnClickListener(new View.OnClickListener() {
+   @Override
+   public void onClick(View view) {
+    MainScreenDirections.ActionMainScreenToSubscriptionDetailScreen action = MainScreenDirections.actionMainScreenToSubscriptionDetailScreen(position);
+    Navigation.findNavController(view).navigate(action);
+   }
+  });
  }
 
  @Override

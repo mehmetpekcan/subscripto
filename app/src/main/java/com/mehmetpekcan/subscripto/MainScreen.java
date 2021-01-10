@@ -13,16 +13,18 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 
 public class MainScreen extends Fragment {
- private ArrayList<Subscription> subscriptions;
+ public static ArrayList<Subscription> subscriptions;
  private RecyclerView subscriptionRecycler;
  private SubscriptionAdapter subscriptionAdapter;
+ String lorem = "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English";
 
  public MainScreen() {
   // Required empty public constructor
  }
 
- public static MainScreen newInstance(String param1, String param2) {
+ public static MainScreen newInstance() {
   MainScreen fragment = new MainScreen();
+
   return fragment;
  }
 
@@ -52,10 +54,10 @@ public class MainScreen extends Fragment {
  }
 
  public void setRecyclerViewSettings() {
-  subscriptions.add(new Subscription(R.drawable.youtube, "31 June", "Youtube", "8₺"));
-  subscriptions.add(new Subscription(R.drawable.netflix, "28 June", "Netflix", "23₺"));
-  subscriptions.add(new Subscription(R.drawable.youtube, "31 June", "Youtube", "8₺"));
-  subscriptions.add(new Subscription(R.drawable.netflix, "28 June", "Netflix", "23₺"));
+  subscriptions.add(new Subscription(R.drawable.youtube, "31 June", "Youtube", "8₺", lorem));
+  subscriptions.add(new Subscription(R.drawable.netflix, "28 June", "Netflix", "23₺", lorem));
+  subscriptions.add(new Subscription(R.drawable.youtube, "31 June", "Youtube", "8₺", lorem));
+  subscriptions.add(new Subscription(R.drawable.netflix, "28 June", "Netflix", "23₺", lorem));
   subscriptionAdapter.notifyDataSetChanged();
  }
 }
