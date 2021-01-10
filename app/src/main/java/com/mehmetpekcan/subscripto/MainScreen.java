@@ -9,13 +9,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import java.util.ArrayList;
 
+import static android.view.View.VISIBLE;
+
 public class MainScreen extends Fragment {
- public static ArrayList<Subscription> subscriptions;
- private RecyclerView subscriptionRecycler;
- private SubscriptionAdapter subscriptionAdapter;
+ static ArrayList<Subscription> subscriptions;
+ RecyclerView subscriptionRecycler;
+ SubscriptionAdapter subscriptionAdapter;
+ LinearLayout noDataLayout;
  String lorem = "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English";
 
  public MainScreen() {
@@ -31,6 +35,7 @@ public class MainScreen extends Fragment {
  @Override
  public void onCreate(Bundle savedInstanceState) {
   super.onCreate(savedInstanceState);
+
  }
 
  @Override
@@ -41,12 +46,14 @@ public class MainScreen extends Fragment {
  }
 
  public void onViewCreated (View view, Bundle savedInstanceState) {
+  noDataLayout = getActivity().findViewById(R.id.noDataLayout);
+  subscriptionRecycler = getActivity().findViewById(R.id.rwSubscription);
+
   setSubscriptions();
   setRecyclerViewSettings();
  }
 
  public void setSubscriptions() {
-  subscriptionRecycler = getActivity().findViewById(R.id.rwSubscription);
   subscriptions = new ArrayList<>();
   subscriptionAdapter = new SubscriptionAdapter(subscriptions);
   subscriptionRecycler.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -58,6 +65,12 @@ public class MainScreen extends Fragment {
   subscriptions.add(new Subscription(R.drawable.netflix, "28 June", "Netflix", "23₺", lorem));
   subscriptions.add(new Subscription(R.drawable.youtube, "31 June", "Youtube", "8₺", lorem));
   subscriptions.add(new Subscription(R.drawable.netflix, "28 June", "Netflix", "23₺", lorem));
-  subscriptionAdapter.notifyDataSetChanged();
+
+  if (subscriptions.isEmpty()) {
+   noDataLayout.setVisibility(VISIBLE);
+  } else {
+   subscriptionRecycler.setVisibility(VISIBLE);
+   subscriptionAdapter.notifyDataSetChanged();
+  }
  }
 }
