@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SubscriptionDetailScreen">
+
+
+  <ImageView
+      android:id="@+id/iwLogo"
+      android:layout_width="96sp"
+      android:layout_height="72sp"
+      android:layout_marginStart="12dp"
+      android:layout_marginTop="24dp"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      tools:src="@tools:sample/avatars" />
+
+  <TextView
+      android:id="@+id/dateTitle"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="12dp"
+      android:layout_marginTop="12dp"
+      android:text="Date"
+      android:textColor="@color/BLACK"
+      android:textSize="22sp"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/iwLogo" />
+
+  <TextView
+      android:id="@+id/twDate"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="12dp"
+      android:layout_marginTop="12dp"
+      android:text="36₺"
+      android:textColor="@color/LIGHT_WHITE"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/dateTitle" />
+
+  <TextView
+      android:id="@+id/costTitle"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="12dp"
+      android:layout_marginTop="12dp"
+      android:text="Cost"
+      android:textColor="@color/BLACK"
+      android:textSize="22sp"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/twDate" />
+
+  <TextView
+      android:id="@+id/twCost"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="12dp"
+      android:layout_marginTop="12dp"
+      android:text="22 June"
+      android:textColor="@color/LIGHT_WHITE"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/costTitle" />
+
+  <TextView
+      android:id="@+id/descriptionTitle"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="12dp"
+      android:layout_marginTop="12dp"
+      android:text="Description"
+      android:textColor="@color/BLACK"
+      android:textSize="22sp"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/twCost" />
+
+  <TextView
+      android:id="@+id/twDescription"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="12dp"
+      android:layout_marginTop="12dp"
+      android:layout_marginEnd="12dp"
+      android:text="Lorem ipsum"
+      android:textColor="@color/LIGHT_WHITE"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/descriptionTitle" />
+
+  <Button
+      android:id="@+id/button"
+      style="@style/primaryButtonStyle"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="16dp"
+      android:layout_marginEnd="16dp"
+      android:layout_marginBottom="96dp"
+      android:background="@color/RED"
+      android:text="UNPAID"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

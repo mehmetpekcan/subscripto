@@ -9,7 +9,14 @@
       android:id="@+id/mainScreen"
       android:name="com.mehmetpekcan.subscripto.MainScreen"
       android:label="fragment_main_screen"
-      tools:layout="@layout/fragment_main_screen" />
+      tools:layout="@layout/fragment_main_screen" >
+    <action
+        android:id="@+id/action_mainScreen_to_subscriptionDetailScreen"
+        app:destination="@id/subscriptionDetailScreen"
+        app:enterAnim="@anim/fragment_fade_enter"
+        app:exitAnim="@anim/fragment_fade_exit">
+    </action>
+  </fragment>
   <fragment
       android:id="@+id/settingsScreen"
       android:name="com.mehmetpekcan.subscripto.SettingsScreen"
@@ -25,4 +32,18 @@
       android:name="com.mehmetpekcan.subscripto.NewSubscriptionScreen"
       android:label="fragment_new_subscription_screen"
       tools:layout="@layout/fragment_new_subscription_screen" />
+  <fragment
+      android:id="@+id/subscriptionDetailScreen"
+      android:name="com.mehmetpekcan.subscripto.SubscriptionDetailScreen"
+      android:label="fragment_subscription_detail_screen"
+      tools:layout="@layout/fragment_subscription_detail_screen" >
+    <action
+        android:id="@+id/action_subscriptionDetailScreen_to_mainScreen"
+        app:destination="@id/mainScreen"
+        app:enterAnim="@anim/fragment_fade_enter"
+        app:exitAnim="@anim/fragment_fade_exit" />
+    <argument
+        android:name="subscriptionId"
+        app:argType="integer" />
+  </fragment>
 </navigation>
