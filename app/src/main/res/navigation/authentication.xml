@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/authentication"
+    app:startDestination="@id/splash_screen">
+
+  <fragment
+      android:id="@+id/splash_screen"
+      android:name="com.mehmetpekcan.subscripto.splash_screen"
+      android:label="fragment_splash_screen"
+      tools:layout="@layout/fragment_splash_screen" >
+    <action
+        android:id="@+id/action_splash_screen_to_login_screen"
+        app:destination="@id/login_screen"
+        app:enterAnim="@anim/fragment_fade_enter"
+        app:exitAnim="@anim/fragment_fade_exit" />
+  </fragment>
+  <fragment
+      android:id="@+id/login_screen"
+      android:name="com.mehmetpekcan.subscripto.login_screen"
+      android:label="fragment_login_screen"
+      tools:layout="@layout/fragment_login_screen" >
+    <action
+        android:id="@+id/action_login_screen_to_register"
+        app:destination="@id/register"
+        app:enterAnim="@anim/fragment_fade_enter"
+        app:exitAnim="@anim/fragment_fade_exit" />
+  </fragment>
+  <fragment
+      android:id="@+id/register"
+      android:name="com.mehmetpekcan.subscripto.register"
+      android:label="fragment_register"
+      tools:layout="@layout/fragment_register" >
+    <action
+        android:id="@+id/action_register_to_login_screen"
+        app:destination="@id/login_screen"
+        app:enterAnim="@anim/fragment_fade_enter"
+        app:exitAnim="@anim/fragment_fade_exit" />
+  </fragment>
+</navigation>
