@@ -34,7 +34,7 @@ public class SubscriptionAdapter extends RecyclerView.Adapter<SubscriptionAdapte
  public void onBindViewHolder(@NonNull SubscriptionHolder holder, final int position) {
   holder.brandTitle.setText(subscriptions.get(position).getBrand());
   holder.subscriptionDate.setText(subscriptions.get(position).getDate());
-  holder.subscriptionPrice.setText(subscriptions.get(position).getPrice());
+  holder.subscriptionPrice.setText(subscriptions.get(position).getPrice() + "₺");
   holder.brandLogo.setImageResource(subscriptions.get(position).getLogo());
 
   holder.itemView.setOnClickListener(new View.OnClickListener() {
