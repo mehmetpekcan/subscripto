@@ -13,7 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 public class splash_screen extends Fragment {
- int SPLASH_TIME = 3000;
+ int SPLASH_TIME = 2500;
 
  @Override
  public void onCreate(Bundle savedInstanceState) {
