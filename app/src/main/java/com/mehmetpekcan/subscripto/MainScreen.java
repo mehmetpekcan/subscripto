@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,7 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
+import static android.content.Context.MODE_PRIVATE;
 import static android.view.View.VISIBLE;
 
 public class MainScreen extends Fragment {
@@ -47,7 +49,7 @@ public class MainScreen extends Fragment {
   subscriptionRecycler = getActivity().findViewById(R.id.rwSubscription);
 
   /* Take subscriptions array if exist */
-  SharedPreferences sharedPreferences = getActivity().getSharedPreferences("taskStore", Context.MODE_PRIVATE);
+  SharedPreferences sharedPreferences = getActivity().getSharedPreferences("taskStore", MODE_PRIVATE);
   ArrayList<Subscription> list = new ArrayList<>();
 
   String isExist = sharedPreferences.getString("subscriptions", null);

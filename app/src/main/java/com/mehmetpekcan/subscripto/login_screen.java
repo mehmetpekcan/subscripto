@@ -1,20 +1,29 @@
 package com.mehmetpekcan.subscripto;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import android.renderscript.ScriptGroup;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
+import static android.content.Context.MODE_PRIVATE;
 
 public class login_screen extends Fragment {
     TextView goRegisterField;
     Button inputSignIn;
+    EditText inputEmail;
+    EditText inputPassword;
 
     public login_screen() {
     }
@@ -30,6 +39,8 @@ public class login_screen extends Fragment {
 
         goRegisterField = fragmentView.findViewById(R.id.goRegisterField);
         inputSignIn = fragmentView.findViewById(R.id.inputSignIn);
+        inputEmail = fragmentView.findViewById(R.id.inputEmail);
+        inputPassword = fragmentView.findViewById(R.id.inputPassword);
 
         goRegisterField.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -41,11 +52,27 @@ public class login_screen extends Fragment {
         inputSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                getClientInfos();
                 Intent intent = new Intent(fragmentView.getContext(), MainActivity.class);
                 fragmentView.getContext().startActivity(intent);
             }
         });
 
         return fragmentView;
+    }
+
+    /*
+    * To get registered client info
+    *
+    * TODO: After db implementation, above will connect it
+    * */
+    public void getClientInfos() {
+        SharedPreferences.Editor clientEditor = getContext().getSharedPreferences("clientPref", MODE_PRIVATE).edit();
+        clientEditor.putString("name", "John");
+        clientEditor.putString("surname", "Doe");
+        clientEditor.putString("password", inputPassword.getText().toString());
+        clientEditor.putString("email", inputEmail.getText().toString());
+
+        clientEditor.commit();
     }
 }
