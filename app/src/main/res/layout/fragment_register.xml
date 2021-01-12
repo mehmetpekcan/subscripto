@@ -72,7 +72,7 @@
         android:textColor="@color/BLACK" />
 
     <EditText
-        android:id="@+id/inputUsername"
+        android:id="@+id/inputEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -113,7 +113,7 @@ and Privacy Policy"
 
 
     <Button
-        android:id="@+id/buttonNewSubscription"
+        android:id="@+id/buttonSignUp"
         style="@style/primaryButtonStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

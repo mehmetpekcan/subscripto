@@ -4,20 +4,20 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
-import android.renderscript.ScriptGroup;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import static android.content.Context.MODE_PRIVATE;
+import static android.widget.Toast.LENGTH_SHORT;
 
 public class login_screen extends Fragment {
     TextView goRegisterField;
@@ -25,8 +25,7 @@ public class login_screen extends Fragment {
     EditText inputEmail;
     EditText inputPassword;
 
-    public login_screen() {
-    }
+    public login_screen() { }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -52,27 +51,25 @@ public class login_screen extends Fragment {
         inputSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getClientInfos();
-                Intent intent = new Intent(fragmentView.getContext(), MainActivity.class);
-                fragmentView.getContext().startActivity(intent);
+                String enteredEmail = inputEmail.getText().toString();
+                String enteredPassword = inputPassword.getText().toString();
+                SharedPreferences clientPref = getActivity().getSharedPreferences("clientPref", MODE_PRIVATE);
+                String savedEmail = clientPref.getString("email", null);
+                String savedPassword = clientPref.getString("password", null);
+
+                try {
+                    if (!enteredEmail.equals(savedEmail) || !enteredPassword.equals(savedPassword)) {
+                        Toast.makeText(getActivity(), "Email or password is wrong...", LENGTH_SHORT).show();
+                    }  else {
+                        Intent intent = new Intent(fragmentView.getContext(), MainActivity.class);
+                        fragmentView.getContext().startActivity(intent);
+                    }
+                } catch(Exception e) {
+                    Toast.makeText(getActivity(), "An error has occurred", LENGTH_SHORT).show();
+                }
             }
         });
 
         return fragmentView;
-    }
-
-    /*
-    * To get registered client info
-    *
-    * TODO: After db implementation, above will connect it
-    * */
-    public void getClientInfos() {
-        SharedPreferences.Editor clientEditor = getContext().getSharedPreferences("clientPref", MODE_PRIVATE).edit();
-        clientEditor.putString("name", "John");
-        clientEditor.putString("surname", "Doe");
-        clientEditor.putString("password", inputPassword.getText().toString());
-        clientEditor.putString("email", inputEmail.getText().toString());
-
-        clientEditor.commit();
     }
 }
