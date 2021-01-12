@@ -1,63 +1,51 @@
 package com.mehmetpekcan.subscripto;
 
+import android.content.Intent;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link login_screen#newInstance} factory method to
- * create an instance of this fragment.
- *
- */
+
 public class login_screen extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment login_screen.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static login_screen newInstance(String param1, String param2) {
-        login_screen fragment = new login_screen();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
+    TextView goRegisterField;
+    Button inputSignIn;
 
     public login_screen() {
-        // Required empty public constructor
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_login_screen, container, false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        final View fragmentView = inflater.inflate(R.layout.fragment_login_screen, container, false);
+
+        goRegisterField = fragmentView.findViewById(R.id.goRegisterField);
+        inputSignIn = fragmentView.findViewById(R.id.inputSignIn);
+
+        goRegisterField.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(fragmentView).navigate(login_screenDirections.actionLoginScreenToRegister());
+            }
+        });
+
+        inputSignIn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(fragmentView.getContext(), MainActivity.class);
+                fragmentView.getContext().startActivity(intent);
+            }
+        });
+
+        return fragmentView;
     }
 }
