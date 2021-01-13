@@ -45,5 +45,29 @@
     <argument
         android:name="subscriptionId"
         app:argType="integer" />
+    <action
+        android:id="@+id/action_subscriptionDetailScreen_to_subscriptionEdit"
+        app:destination="@id/subscriptionEdit"
+        app:enterAnim="@anim/fragment_fade_enter"
+        app:exitAnim="@anim/fragment_close_exit" />
+  </fragment>
+  <fragment
+      android:id="@+id/subscriptionEdit"
+      android:name="com.mehmetpekcan.subscripto.subscriptionEdit"
+      android:label="fragment_subscription_edit"
+      tools:layout="@layout/fragment_subscription_edit" >
+    <action
+        android:id="@+id/action_subscriptionEdit_to_subscriptionDetailScreen"
+        app:destination="@id/subscriptionDetailScreen"
+        app:enterAnim="@anim/fragment_fade_enter"
+        app:exitAnim="@anim/fragment_fade_exit" />
+    <action
+        android:id="@+id/action_subscriptionEdit_to_mainScreen"
+        app:destination="@id/mainScreen"
+        app:enterAnim="@anim/fragment_fade_enter"
+        app:exitAnim="@anim/fragment_fade_exit" />
+    <argument
+        android:name="subscriptionId"
+        app:argType="integer" />
   </fragment>
 </navigation>

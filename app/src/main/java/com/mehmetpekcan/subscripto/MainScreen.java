@@ -1,6 +1,5 @@
 package com.mehmetpekcan.subscripto;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -8,11 +7,11 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -28,13 +27,13 @@ public class MainScreen extends Fragment {
  RecyclerView subscriptionRecycler;
  static SubscriptionAdapter subscriptionAdapter;
  LinearLayout noDataLayout;
+ TextView userInfoField;
 
  public MainScreen() { }
 
  @Override
  public void onCreate(Bundle savedInstanceState) {
   super.onCreate(savedInstanceState);
-
  }
 
  @Override
@@ -47,6 +46,12 @@ public class MainScreen extends Fragment {
  public void onViewCreated (View view, Bundle savedInstanceState) {
   noDataLayout = getActivity().findViewById(R.id.noDataLayout);
   subscriptionRecycler = getActivity().findViewById(R.id.rwSubscription);
+  userInfoField = getActivity().findViewById(R.id.userInfoField);
+
+  SharedPreferences clientEditor = getActivity().getSharedPreferences("clientPref", MODE_PRIVATE);
+  String name = clientEditor.getString("name", "");
+  String surname = clientEditor.getString("surname", "");
+  userInfoField.setText(name + " " + surname);
 
   /* Take subscriptions array if exist */
   SharedPreferences sharedPreferences = getActivity().getSharedPreferences("taskStore", MODE_PRIVATE);
