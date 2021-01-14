@@ -15,8 +15,8 @@
 
 ## Contributors
 
-- Mustafa Şükrü Kapusuz
 - Mehmet Pekcan
+- Mustafa Şükrü Kapusuz
 
 ## Licence
 
