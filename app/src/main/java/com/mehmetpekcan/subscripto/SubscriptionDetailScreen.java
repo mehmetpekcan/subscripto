@@ -65,8 +65,6 @@ public class SubscriptionDetailScreen extends Fragment {
      buttonPaid.setBackgroundResource(R.color.PRIMARY_COLOR);
      buttonPaid.setText("Paid");
     }
-
-    Log.d("Bu", "deger" + subscriptions.get(subscriptionId).getIsPaid());
    }
   });
 
