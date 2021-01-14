@@ -4,12 +4,14 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -28,6 +30,7 @@ public class MainScreen extends Fragment {
  static SubscriptionAdapter subscriptionAdapter;
  LinearLayout noDataLayout;
  TextView userInfoField;
+ Button noDataAddButton;
 
  public MainScreen() { }
 
@@ -47,6 +50,13 @@ public class MainScreen extends Fragment {
   noDataLayout = getActivity().findViewById(R.id.noDataLayout);
   subscriptionRecycler = getActivity().findViewById(R.id.rwSubscription);
   userInfoField = getActivity().findViewById(R.id.userInfoField);
+  noDataAddButton = getActivity().findViewById(R.id.noDataAddButton);
+
+  noDataAddButton.setOnClickListener(new View.OnClickListener() {
+   public void onClick(View view) {
+    Navigation.findNavController(view).navigate(MainScreenDirections.actionMainScreenToNewSubscriptionScreen());
+   }
+  });
 
   SharedPreferences clientEditor = getActivity().getSharedPreferences("clientPref", MODE_PRIVATE);
   String name = clientEditor.getString("name", "");
