@@ -6,13 +6,32 @@
     android:layout_height="match_parent"
     tools:context=".StatisticsScreen">
 
-  <TextView
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:text="Stats Screen"
+  <LinearLayout
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toTopOf="parent" />
+      app:layout_constraintTop_toTopOf="parent"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Total Charge for Month"
+        android:textSize="24sp"
+        android:textColor="@color/PRIMARY_COLOR"/>
+    <TextView
+        android:id="@+id/totalChargeInput"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/BLACK"
+        android:textSize="18sp"
+        android:text="24tl"
+        />
+
+
+  </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout >
