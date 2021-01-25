@@ -1,5 +1,6 @@
 package com.mehmetpekcan.subscripto;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -15,13 +16,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 import static android.content.Context.MODE_PRIVATE;
 import static android.widget.Toast.LENGTH_SHORT;
 
 public class SettingsScreen extends Fragment {
  String name, surname, email, password;
  EditText inputName, inputSurname, inputEmail, inputPassword;
- Button buttonChangeSettings;
+ Button buttonChangeSettings, logoutButton;
+ private FirebaseAuth firebaseAuth;
 
  public SettingsScreen() { }
 
@@ -50,8 +54,20 @@ public class SettingsScreen extends Fragment {
   inputEmail = getActivity().findViewById(R.id.inputEmail);
   inputPassword = getActivity().findViewById(R.id.inputPassword);
   buttonChangeSettings = getActivity().findViewById(R.id.buttonChangeSettings);
+  logoutButton = getActivity().findViewById(R.id.signOutButton);
 
   setClientInfos();
+
+  logoutButton.setOnClickListener(new View.OnClickListener() {
+   @Override
+   public void onClick(View view) {
+    firebaseAuth = FirebaseAuth.getInstance();
+    firebaseAuth.signOut();
+
+    Intent intent = new Intent(getContext(), authentication.class);
+    startActivity(intent);
+   }
+  });
 
   buttonChangeSettings.setOnClickListener(new View.OnClickListener() {
    @Override

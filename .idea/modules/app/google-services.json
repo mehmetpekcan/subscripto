@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "670425289918",
+    "project_id": "subscripto-android",
+    "storage_bucket": "subscripto-android.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:670425289918:android:aa23ba48e2a66eb9e77aef",
+        "android_client_info": {
+          "package_name": "com.mehmetpekcan.subscripto"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "670425289918-av0fdjvgcjr4n560rm308ipt0hedv6be.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mehmetpekcan.subscripto",
+            "certificate_hash": "4339e6fd6208038f28d52618d7fcff93cb8483e5"
+          }
+        },
+        {
+          "client_id": "670425289918-vho8opeoh9623s7rf219lt3most0196a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC12d2--lkhYYppzOciV8-G3xTCvKN_CYg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "670425289918-vho8opeoh9623s7rf219lt3most0196a.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

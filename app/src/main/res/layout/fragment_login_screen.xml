@@ -81,6 +81,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="-5dp"
             android:layout_marginTop="12dp"
+            android:checked="true"
             android:buttonTint="@color/LIGHT_WHITE"
             android:text="Keep me signed in"
             android:textColor="@color/LIGHT_WHITE" />
