@@ -1,9 +1,8 @@
 package com.mehmetpekcan.subscripto;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -13,17 +12,23 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.lang.reflect.Type;
-import java.util.ArrayList;
+import java.util.HashMap;
 
 import static android.widget.Toast.LENGTH_SHORT;
+
 
 public class NewSubscriptionScreen extends Fragment {
  EditText inputSubscriptionName, inputCost, inputDate, inputDescription;
  Button buttonNewSubscription;
+ private FirebaseFirestore firebaseFirestore;
+ private FirebaseAuth firebaseAuth;
 
  public NewSubscriptionScreen() { }
 
@@ -41,12 +46,16 @@ public class NewSubscriptionScreen extends Fragment {
   inputDescription = fragmentView.findViewById(R.id.inputDescription);
   buttonNewSubscription = fragmentView.findViewById(R.id.buttonNewSubscription);
 
+  firebaseFirestore = FirebaseFirestore.getInstance();
+  firebaseAuth = FirebaseAuth.getInstance();
+
   buttonNewSubscription.setOnClickListener(new View.OnClickListener() {
    @Override
    public void onClick(View v) {
     handleNewSubscription();
    }
   });
+
 
   return fragmentView;
  }
@@ -62,35 +71,31 @@ public class NewSubscriptionScreen extends Fragment {
    imageResource = R.drawable.youtube;
   }
 
-  Subscription newSubscription = new Subscription(
-          imageResource,
-          inputDate.getText().toString(),
-          subsName,
-          inputCost.getText().toString(),
-          inputDescription.getText().toString());
+  FirebaseUser currentUser = firebaseAuth.getCurrentUser();
 
-  /* Add to shared preferences */
-  SharedPreferences sharedPreferences = getActivity().getSharedPreferences("taskStore", Context.MODE_PRIVATE);
-  SharedPreferences.Editor editor = sharedPreferences.edit();
+  HashMap<String, Object> saveIt = new HashMap<>();
+  saveIt.put("image", imageResource);
+  saveIt.put("date", inputDate.getText().toString());
+  saveIt.put("name", subsName);
+  saveIt.put("price", inputCost.getText().toString());
+  saveIt.put("description", inputDescription.getText().toString());
+  saveIt.put("userEmail", currentUser.getEmail());
 
-  ArrayList<Subscription> list = new ArrayList<>();
-  String isExist = sharedPreferences.getString("subscriptions", null);
+  firebaseFirestore.collection("subscriptions").add(saveIt).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+    @Override
+    public void onSuccess(DocumentReference documentReference) {
+     Toast.makeText(getActivity(), "New subscription added successfuly", LENGTH_SHORT).show();
 
-  try {
-   if (isExist != null) {
-    Type type = new TypeToken<ArrayList<Subscription>>() {}.getType();
-    list = new Gson().fromJson(sharedPreferences.getString("subscriptions", null), type);
+     inputSubscriptionName.setText("");
+     inputCost.setText("");
+     inputDescription.setText("");
+     inputDate.setText("");
+    }
+   }).addOnFailureListener(new OnFailureListener() {
+   @Override
+   public void onFailure(@NonNull Exception e) {
+    Toast.makeText(getActivity(), e.getLocalizedMessage(), LENGTH_SHORT).show();
    }
-
-   list.add(newSubscription);
-   editor.putString("subscriptions", new Gson().toJson(list)).apply();
-   Toast.makeText(getActivity(), "New subscription added successfuly", LENGTH_SHORT).show();
-   inputSubscriptionName.setText("");
-   inputCost.setText("");
-   inputDescription.setText("");
-   inputDate.setText("");
-  } catch (Exception ex) {
-   Toast.makeText(getActivity(), "New subscription couldn't add", LENGTH_SHORT).show();
-  }
+  });
   }
 }
