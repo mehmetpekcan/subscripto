@@ -3,9 +3,11 @@ package com.mehmetpekcan.subscripto;
 public class Subscription {
  int logo;
  int isPaid = 0;
- String date, brand, price, description;
+ String date, brand, price, description, id;
 
- public Subscription(int logo, String date, String brand, String price, String description, int isPaid) {
+
+ public Subscription(int logo, String date, String brand, String price, String description, int isPaid, String id) {
+  this.id = id;
   this.logo = logo;
   this.date = date;
   this.brand = brand;
@@ -60,5 +62,14 @@ public class Subscription {
 
  public void setPrice(String price) {
   this.price = price;
+ }
+
+
+ public String getId() {
+  return id;
+ }
+
+ public void setId(String id) {
+  this.id = id;
  }
 }

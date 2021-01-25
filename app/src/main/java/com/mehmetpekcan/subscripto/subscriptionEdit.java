@@ -61,7 +61,8 @@ public class subscriptionEdit extends Fragment {
              inputName.getText().toString(),
              inputCost.getText().toString(),
              inputDescription.getText().toString(),
-             0);
+             0,
+             "id");
 
      subscriptions.get(subscriptionId).setBrand(inputName.getText().toString());
      subscriptions.get(subscriptionId).setPrice(inputCost.getText().toString());

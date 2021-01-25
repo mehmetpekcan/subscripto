@@ -93,7 +93,8 @@ public class MainScreen extends Fragment {
               (String) data.get("name"),
               (String) data.get("price"),
               (String) data.get("description"),
-              Integer.parseInt(String.valueOf(data.get("isPaid")))
+              Integer.parseInt(String.valueOf(data.get("isPaid"))),
+              snapshot.getId()
               );
 
       list.add(newSubs);

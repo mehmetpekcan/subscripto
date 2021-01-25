@@ -9,10 +9,24 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.Objects;
 
 public class SubscriptionDetailScreen extends Fragment {
  public ArrayList<Subscription> subscriptions = MainScreen.subscriptions;
@@ -20,6 +34,7 @@ public class SubscriptionDetailScreen extends Fragment {
  public ImageView iwLogo;
  Button buttonPaid, buttonEdit;
  Integer isPaid, subscriptionId;
+ private FirebaseFirestore firebaseFirestore;
 
  public SubscriptionDetailScreen() { }
 
@@ -38,6 +53,7 @@ public class SubscriptionDetailScreen extends Fragment {
   iwLogo = getActivity().findViewById(R.id.iwLogo);
   buttonPaid = getActivity().findViewById(R.id.buttonPaid);
   buttonEdit = getActivity().findViewById(R.id.buttonEdit);
+  firebaseFirestore = FirebaseFirestore.getInstance();
 
 
   /*
@@ -46,15 +62,37 @@ public class SubscriptionDetailScreen extends Fragment {
   if (getArguments() != null) {
    subscriptionId =  SubscriptionDetailScreenArgs.fromBundle(getArguments()).getSubscriptionId();
 
-   twCost.setText(subscriptions.get(subscriptionId).getPrice());
-   twDate.setText(subscriptions.get(subscriptionId).getDate());
-   twDescription.setText(subscriptions.get(subscriptionId).getDescription());
-   iwLogo.setImageResource(subscriptions.get(subscriptionId).getLogo());
+   final String docId = subscriptions.get(subscriptionId).getId();
+
+   CollectionReference colRef = firebaseFirestore.collection("subscriptions");
+
+    colRef.get()
+       .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        @Override
+        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+          for (QueryDocumentSnapshot document : task.getResult()) {
+           if (document.getId() == docId) {
+            twCost.setText((String) document.get("price"));
+            twDate.setText((String) document.get("date"));
+            twDescription.setText((String) document.get("description"));
+            iwLogo.setImageResource(Integer.parseInt(String.valueOf(Objects.requireNonNull(document.get("image")))));
+            isPaid = Integer.parseInt(String.valueOf(document.get("isPaid")));
+
+            if (isPaid == 0) {
+             buttonPaid.setBackgroundResource(R.color.RED);
+             buttonPaid.setText("Unpaid");
+            } else {
+             buttonPaid.setBackgroundResource(R.color.PRIMARY_COLOR);
+             buttonPaid.setText("Paid");
+            }
+           }
+          }
+        }
+       });
   }
 
   buttonPaid.setOnClickListener(new View.OnClickListener() {
    public void onClick(View view) {
-    isPaid = subscriptions.get(subscriptionId).getIsPaid();
 
     if (isPaid == 1) {
      subscriptions.get(subscriptionId).setIsPaid(0);
