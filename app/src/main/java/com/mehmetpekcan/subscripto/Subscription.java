@@ -1,15 +1,16 @@
 package com.mehmetpekcan.subscripto;
 
 public class Subscription {
- int logo, isPaid;
+ int logo;
+ int isPaid = 0;
  String date, brand, price, description;
 
- public Subscription(int logo, String date, String brand, String price, String description) {
+ public Subscription(int logo, String date, String brand, String price, String description, int isPaid) {
   this.logo = logo;
   this.date = date;
   this.brand = brand;
   this.price = price;
-  this.isPaid = 0;
+  this.isPaid = isPaid;
   this.description = description;
  }
 

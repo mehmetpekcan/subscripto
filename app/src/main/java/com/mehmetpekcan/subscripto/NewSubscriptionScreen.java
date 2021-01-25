@@ -23,7 +23,6 @@ import java.util.HashMap;
 
 import static android.widget.Toast.LENGTH_SHORT;
 
-
 public class NewSubscriptionScreen extends Fragment {
  EditText inputSubscriptionName, inputCost, inputDate, inputDescription;
  Button buttonNewSubscription;
@@ -80,6 +79,7 @@ public class NewSubscriptionScreen extends Fragment {
   saveIt.put("price", inputCost.getText().toString());
   saveIt.put("description", inputDescription.getText().toString());
   saveIt.put("userEmail", currentUser.getEmail());
+  saveIt.put("isPaid", 0);
 
   firebaseFirestore.collection("subscriptions").add(saveIt).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
     @Override

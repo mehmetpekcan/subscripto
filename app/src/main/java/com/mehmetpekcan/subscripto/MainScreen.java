@@ -3,11 +3,13 @@ package com.mehmetpekcan.subscripto;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,11 +17,19 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.Objects;
 
 import static android.content.Context.MODE_PRIVATE;
 import static android.view.View.VISIBLE;
@@ -31,6 +41,7 @@ public class MainScreen extends Fragment {
  LinearLayout noDataLayout;
  TextView userInfoField;
  Button noDataAddButton;
+ private FirebaseFirestore firebaseFirestore;
 
  public MainScreen() { }
 
@@ -52,6 +63,8 @@ public class MainScreen extends Fragment {
   userInfoField = getActivity().findViewById(R.id.userInfoField);
   noDataAddButton = getActivity().findViewById(R.id.noDataAddButton);
 
+  firebaseFirestore = FirebaseFirestore.getInstance();
+
   noDataAddButton.setOnClickListener(new View.OnClickListener() {
    public void onClick(View view) {
     Navigation.findNavController(view).navigate(MainScreenDirections.actionMainScreenToNewSubscriptionScreen());
@@ -63,19 +76,34 @@ public class MainScreen extends Fragment {
   String surname = clientEditor.getString("surname", "");
   userInfoField.setText(name + " " + surname);
 
-  /* Take subscriptions array if exist */
-  SharedPreferences sharedPreferences = getActivity().getSharedPreferences("taskStore", MODE_PRIVATE);
-  ArrayList<Subscription> list = new ArrayList<>();
+  final ArrayList<Subscription> list = new ArrayList<>();
 
-  String isExist = sharedPreferences.getString("subscriptions", null);
+  CollectionReference colRef = firebaseFirestore.collection("subscriptions");
+  colRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
+   @Override
+   public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+    if (value != null ) {
+     for (DocumentSnapshot snapshot: value.getDocuments()) {
+      Map<String, Object> data = snapshot.getData();
 
-  if (isExist != null) {
-   Type type = new TypeToken<ArrayList<Subscription>>() {}.getType();
-   list = new Gson().fromJson(sharedPreferences.getString("subscriptions", null), type);
-  }
+      assert data != null;
+      Subscription newSubs = new Subscription(
+              Integer.parseInt(String.valueOf(Objects.requireNonNull(data.get("image")))),
+              (String) data.get("date"),
+              (String) data.get("name"),
+              (String) data.get("price"),
+              (String) data.get("description"),
+              Integer.parseInt(String.valueOf(data.get("isPaid")))
+              );
 
-  setSubscriptions(list);
-  setRecyclerViewSettings();
+      list.add(newSubs);
+     }
+     setSubscriptions(list);
+     setRecyclerViewSettings();
+    }
+   }
+  });
+
  }
 
  public void setSubscriptions(ArrayList<Subscription> list) {
