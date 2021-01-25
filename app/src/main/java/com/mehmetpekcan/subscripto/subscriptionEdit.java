@@ -2,6 +2,7 @@ package com.mehmetpekcan.subscripto;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
@@ -13,7 +14,15 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
 import java.util.ArrayList;
+import java.util.Objects;
 
 import static android.widget.Toast.LENGTH_SHORT;
 
@@ -23,6 +32,8 @@ public class subscriptionEdit extends Fragment {
  Button buttonChange, buttonDelete;
  Integer subscriptionId;
  ImageView iwLogo;
+ private FirebaseFirestore firebaseFirestore;
+ String docId;
 
  public subscriptionEdit() { }
 
@@ -43,26 +54,36 @@ public class subscriptionEdit extends Fragment {
   buttonChange = editFragment.findViewById(R.id.buttonChange);
   buttonDelete = editFragment.findViewById(R.id.buttonDelete);
 
+  firebaseFirestore = FirebaseFirestore.getInstance();
+  final CollectionReference colRef = firebaseFirestore.collection("subscriptions");
+
   subscriptionId =  SubscriptionDetailScreenArgs.fromBundle(getArguments()).getSubscriptionId();
+  docId = subscriptions.get(subscriptionId).getId();
 
-  inputName.setText(subscriptions.get(subscriptionId).getBrand());
-  inputCost.setText(subscriptions.get(subscriptionId).getPrice());
-  inputDate.setText(subscriptions.get(subscriptionId).getDate());
-  inputDescription.setText(subscriptions.get(subscriptionId).getDescription());
-  iwLogo.setImageResource(subscriptions.get(subscriptionId).getLogo());
 
+  colRef.get()
+          .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+           @Override
+           public void onComplete(@NonNull Task<QuerySnapshot> task) {
+            for (QueryDocumentSnapshot document : task.getResult()) {
+             if (document.getId() == docId) {
+              inputName.setText((String) document.get("name"));
+              inputCost.setText((String) document.get("price"));
+              inputDate.setText((String) document.get("date"));
+              inputDescription.setText((String) document.get("description"));
+              iwLogo.setImageResource(Integer.parseInt(String.valueOf(Objects.requireNonNull(document.get("image")))));
+             }
+            }
+           }
+          });
 
   buttonChange.setOnClickListener(new View.OnClickListener() {
    public void onClick(View view) {
     try {
-     Subscription test = new Subscription(
-             subscriptions.get(subscriptionId).getLogo(),
-             inputDate.getText().toString(),
-             inputName.getText().toString(),
-             inputCost.getText().toString(),
-             inputDescription.getText().toString(),
-             0,
-             "id");
+     colRef.document(docId).update("name", inputName.getText().toString());
+     colRef.document(docId).update("date", inputDate.getText().toString());
+     colRef.document(docId).update("price", inputCost.getText().toString());
+     colRef.document(docId).update("description", inputDescription.getText().toString());
 
      subscriptions.get(subscriptionId).setBrand(inputName.getText().toString());
      subscriptions.get(subscriptionId).setPrice(inputCost.getText().toString());

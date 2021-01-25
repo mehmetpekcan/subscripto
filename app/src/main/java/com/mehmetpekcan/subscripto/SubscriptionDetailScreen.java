@@ -35,6 +35,7 @@ public class SubscriptionDetailScreen extends Fragment {
  Button buttonPaid, buttonEdit;
  Integer isPaid, subscriptionId;
  private FirebaseFirestore firebaseFirestore;
+ String docId;
 
  public SubscriptionDetailScreen() { }
 
@@ -54,6 +55,7 @@ public class SubscriptionDetailScreen extends Fragment {
   buttonPaid = getActivity().findViewById(R.id.buttonPaid);
   buttonEdit = getActivity().findViewById(R.id.buttonEdit);
   firebaseFirestore = FirebaseFirestore.getInstance();
+  final CollectionReference colRef = firebaseFirestore.collection("subscriptions");
 
 
   /*
@@ -62,9 +64,7 @@ public class SubscriptionDetailScreen extends Fragment {
   if (getArguments() != null) {
    subscriptionId =  SubscriptionDetailScreenArgs.fromBundle(getArguments()).getSubscriptionId();
 
-   final String docId = subscriptions.get(subscriptionId).getId();
-
-   CollectionReference colRef = firebaseFirestore.collection("subscriptions");
+   docId = subscriptions.get(subscriptionId).getId();
 
     colRef.get()
        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -95,11 +95,11 @@ public class SubscriptionDetailScreen extends Fragment {
    public void onClick(View view) {
 
     if (isPaid == 1) {
-     subscriptions.get(subscriptionId).setIsPaid(0);
+     colRef.document(docId).update("isPaid", 0);
      buttonPaid.setBackgroundResource(R.color.RED);
      buttonPaid.setText("Unpaid");
     } else {
-     subscriptions.get(subscriptionId).setIsPaid(1);
+     colRef.document(docId).update("isPaid", 1);
      buttonPaid.setBackgroundResource(R.color.PRIMARY_COLOR);
      buttonPaid.setText("Paid");
     }
